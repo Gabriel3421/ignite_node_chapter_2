@@ -1,20 +1,21 @@
-import { ISpecificationRepository } from "../repositories/ISpecificationRepository";
+import { ISpecificationRepository } from "../../repositories/ISpecificationRepository";
 
 interface IRequest {
   name: string;
   description: string;
 }
 
-class CreateSpecificationService {
+class CreateSpecificationUseCase {
+  // eslint-disable-next-line prettier/prettier
   constructor(private specificationRepository: ISpecificationRepository) { }
   execute({ description, name }: IRequest): void {
     const specificationAlreadyExists =
       this.specificationRepository.findByName(name);
     if (specificationAlreadyExists) {
-      throw new Error("Category Already Exists!");
+      throw new Error("Specification Already Exists!");
     }
     this.specificationRepository.create({ name, description });
   }
 }
 
-export { CreateSpecificationService };
+export { CreateSpecificationUseCase };
